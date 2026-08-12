@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production
+dist/
+build/
+.next/
+out/
+
+# Misc
+.DS_Store
+*.pem
+*.log
+*.log.*
+.env
+.env*.local
+.env*.production.local
+.cache
+.turbo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.prettierignore
+
+# Testing
+.nyc_output
+coverage/
+
+# Generated
+generated/

@@ -1,0 +1,22 @@
+{
+  "name": "appforge-ai",
+  "version": "0.1.0",
+  "description": "AI-powered application builder - Convert natural language to full-stack applications",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/web",
+    "packages/api"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=packages/web & npm run dev --workspace=packages/api",
+    "build": "npm run build --workspace=packages/web && npm run build --workspace=packages/api",
+    "preview": "npm run preview --workspace=packages/web",
+    "type-check": "npm run type-check --workspaces",
+    "lint": "npm run lint --workspaces",
+    "test": "npm run test --workspaces"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
