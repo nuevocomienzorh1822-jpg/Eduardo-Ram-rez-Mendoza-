@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Maestra Amiga de Yaretzi ✨</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { 
+            background: linear-gradient(135deg, #fff5f5, #e6f7ff); 
+            min-height: 100vh; 
+            padding: 20px;
+            text-align: center;
+        }
+        .contenedor { max-width: 450px; margin: 0 auto; }
+        h1 { color: #b34d82; font-size: 28px; margin-bottom: 10px; }
+        h2 { color: #4d79b3; font-size: 20px; margin-bottom: 20px; }
+        .foto { 
+            width: 220px; height: 220px; 
+            border-radius: 50%; 
+            background: #ffd9e6; 
+            margin: 0 auto 25px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 80px;
+            border: 5px solid #ff99cc;
+        }
+        .mensaje { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 20px; 
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-size: 18px;
+            color: #333;
+            line-height: 1.6;
+        }
+        .letra {
+            display: inline-block;
+            width: 100px; height: 100px;
+            font-size: 60px;
+            font-weight: bold;
+            border-radius: 15px;
+            margin: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .letra-a { background: #ffcccc; color: #cc3333; }
+        .letra-i { background: #ccffcc; color: #339933; }
+        .letra:hover { transform: scale(1.1); }
+        .nombre-letras {
+            font-size: 35px;
+            letter-spacing: 8px;
+            margin: 25px 0;
+            font-weight: bold;
+            color: #444;
+        }
+        .btn {
+            background: #ff66b3;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .btn:hover { background: #ff3399; }
+        .respuesta {
+            font-size: 22px;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 15px;
+            background: #f0fff4;
+            color: #228844;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>🌺 YARETZI GUADALUPE 🌺</h1>
+        <h2>💖 Mi Maestra Amiga 💖</h2>
+        
+        <div class="foto">👧</div>
+
+        <div class="mensaje" id="saludo">
+            ¡Hola, Yaretzi! 💛✨<br>
+            Soy tu maestra amiga.<br>
+            Vamos a aprender juntas,<br>
+            despacito, sin prisa 🥰
+        </div>
+
+        <h3>Busca las letras que ya conoces en tu nombre:</h3>
+        <div class="nombre-letras">
+            Y <span id="letra-y-a">A</span> R E T Z <span id="letra-y-i">I</span>
+        </div>
+
+        <p style="font-size:18px; margin:15px 0;">Toca la letra que buscas:</p>
+        
+        <button class="letra letra-a" onclick="buscarA()">A</button>
+        <button class="letra letra-i" onclick="buscarI()">I</button>
+
+        <div class="respuesta" id="mensaje-respuesta"></div>
+
+        <br><br>
+        <button class="btn" onclick="reiniciar()">🔄 Volver a intentar</button>
+    </div>
+
+    <script>
+        function buscarA() {
+            document.getElementById('mensaje-respuesta').style.display = 'block';
+            document.getElementById('mensaje-respuesta').innerHTML = 
+                '🎉 ¡ASÍ SE HACE, YARETZI! 🎉<br>¡La encontraste! La A está ahí 💛<br>Eres muy lista ✨';
+            document.getElementById('letra-y-a').style.background = '#ff9999';
+            reproducirVoz("¡Muy bien, Yaretzi! Encontraste la letra A. ¡Eres muy lista!");
+        }
+
+        function buscarI() {
+            document.getElementById('mensaje-respuesta').style.display = 'block';
+            document.getElementById('mensaje-respuesta').innerHTML = 
+                '🌟 ¡EXCELENTE! 🌟<br>Ahí está la I 💖<br>¡Qué bien lo haces!';
+            document.getElementById('letra-y-i').style.background = '#99ff99';
+            reproducirVoz("¡Excelente, Yaretzi! Encontraste la letra I. Estoy muy orgullosa de ti.");
+        }
+
+        function reiniciar() {
+            document.getElementById('mensaje-respuesta').style.display = 'none';
+            document.getElementById('letra-y-a').style.background = 'transparent';
+            document.getElementById('letra-y-i').style.background = 'transparent';
+        }
+
+        function reproducirVoz(texto) {
+            let voz = new SpeechSynthesisUtterance(texto);
+            voz.lang = 'es-MX';
+            voz.volume = 1;
+            voz.rate = 0.8;
+            voz.pitch = 1.1;
+            speechSynthesis.speak(voz);
+        }
+    </script>
+</body>
+</html>
+
