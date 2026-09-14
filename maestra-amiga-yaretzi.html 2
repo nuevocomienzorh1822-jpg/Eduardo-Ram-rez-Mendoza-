@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Maestra Amiga de Yaretzi ✨</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { 
+            background: linear-gradient(135deg, #fff5f5, #e6f7ff); 
+            min-height: 100vh; 
+            padding: 15px;
+            text-align: center;
+        }
+        .contenedor { max-width: 480px; margin: 0 auto; }
+        h1 { color: #b34d82; font-size: 26px; margin-bottom: 8px; }
+        h2 { color: #4d79b3; font-size: 18px; margin-bottom: 20px; }
+        .seccion {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .boton-principal {
+            background: linear-gradient(135deg, #ff66b3, #ff3399);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            font-size: 17px;
+            border-radius: 30px;
+            margin: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .boton-principal:hover { transform: scale(1.05); }
+        .boton-voz { background: linear-gradient(135deg, #66b3ff, #3399ff); }
+        .boton-camara { background: linear-gradient(135deg, #66cc99, #33aa66); }
+        .letra-boton {
+            display: inline-block;
+            width: 85px; height: 85px;
+            font-size: 50px;
+            font-weight: bold;
+            border-radius: 15px;
+            margin: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            border: none;
+        }
+        .vocal { background: #ffdddd; color: #cc3333; }
+        .letra { background: #ddf0ff; color: #3366cc; }
+        .letra-boton:hover { transform: scale(1.1); }
+        .libreta {
+            background: #fff9e6;
+            border: 3px solid #e6cc80;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: left;
+            font-size: 28px;
+            font-family: cursive;
+            min-height: 100px;
+            line-height: 2;
+        }
+        .respuesta {
+            font-size: 20px;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 15px;
+            background: #f0fff4;
+            color: #228844;
+            display: none;
+        }
+        .progreso {
+            text-align: left;
+            background: #f4f4ff;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+        .barra {
+            height: 20px;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 5px 0;
+        }
+        .llenado {
+            height: 100%;
+            background: linear-gradient(90deg, #ff66b3, #66cc99);
+            width: 0%;
+            transition: 1s;
+        }
+        .oculto { display: none; }
+        .entrada-texto {
+            font-size: 22px;
+            padding: 10px;
+            width: 100%;
+            border: 2px solid #ffb3d1;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        img { max-width: 100%; border-radius: 12px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>🌺 YARETZI GUADALUPE 🌺</h1>
+        <h2>💖 Mi Maestra Amiga 💖</h2>
+
+        <div class="seccion">
+            <button class="boton-principal boton-voz" onclick="modoVoz()">🎤 Hablar con la Maestra</button>
+            <button class="boton-principal boton-camara" onclick="modoCamara()">📷 Enviar mi tarea</button>
+        </div>
+
+        <div class="seccion" id="caja-saludo">
+            <p style="font-size:18px; line-height:1.7; color:#444;">
+                ¡Hola, Yaretzi! 💛✨<br>
+                Soy tu maestra amiga. Vamos a aprender juntas,<br>
+                despacito, sin prisa 🥰
+            </p>
+        </div>
+
+        <div class="seccion" id="menu-aprender">
+            <h3>📚 ¿Qué vamos a aprender hoy?</h3>
+            <button class="boton-principal" onclick="mostrarVocales()">🔤 Las Vocales</button>
+            <button class="boton-principal" onclick="mostrarLetras()">🔡 Letras del Abecedario</button>
+            <button class="boton-principal" onclick="mostrarLectura()">📖 Leer y Escribir</button>
+        </div>
+
+        <div class="seccion oculto" id="seccion-vocales">
+            <h3>🎵 Las Vocales</h3>
+            <p style="margin:10px 0;">Toca la vocal que vamos a aprender:</p>
+            <button class="letra-boton vocal" onclick="enseñarVocal('A')">A</button>
+            <button class="letra-boton vocal" onclick="enseñarVocal('E')">E</button>
+            <button class="letra-boton vocal" onclick="enseñarVocal('I')">I</button>
+            <button class="letra-boton vocal" onclick="enseñarVocal('O')">O</button>
+            <button class="letra-boton vocal" onclick="enseñarVocal('U')">U</button>
+            
+            <div class="libreta" id="libreta-vocales">
+                Tu libreta ✏️<br>
+            </div>
+            
+            <div class="respuesta" id="respuesta-vocal"></div>
+            <button class="boton-principal" onclick="regresarMenu()">🔙 Volver</button>
+        </div>
+
+        <div class="seccion oculto" id="seccion-letras">
+            <h3>🔡 Las Letras</h3>
+            <p style="margin:10px 0;">Vamos paso a paso:</p>
+            <div id="letras-orden"></div>
+            <div class="libreta" id="libreta-letras">
+                Tu libreta ✏️<br>
+            </div>
+            <div class="respuesta" id="respuesta-letra"></div>
+            <button class="boton-principal" onclick="regresarMenu()">🔙 Volver</button>
+        </div>
+
+        <div class="seccion oculto" id="seccion-lectura">
+            <h3>📖 Leemos y Escribimos</h3>
+            <p id="ejercicio-lectura" style="font-size:24px; margin:15px 0; color:#b34d82; font-weight:bold;"></p>
+            <input type="text" class="entrada-texto" id="respuesta-escritura" placeholder="Escribe aquí 👇">
+            <button class="boton-principal" onclick="verificarEscritura()">✅ Revisar</button>
+            <div class="respuesta" id="resultado-escritura"></div>
+            <button class="boton-principal" onclick="regresarMenu()">🔙 Volver</button>
+        </div>
+
+        <div class="seccion oculto" id="seccion-camara">
+            <h3>📷 Entregar mi tarea</h3>
+            <p>Toma foto de tu libreta ✏️</p>
+            <input type="file" id="camara" accept="image/*" capture="environment" onchange="verFoto()">
+            <div id="vista-foto"></div>
+            <p style="margin-top:15px; color:#666;">💛 Papá: así ves cómo va avanzando</p>
+            <button class="boton-principal" onclick="regresarMenu()">🔙 Volver</button>
+        </div>
+
+        <div class="seccion">
+            <h3>🌟 Mi Progreso</h3>
+            <div class="progreso">
+                <p>Vocales: <span id="num-vocales">0</span>/5</p>
+                <div class="barra"><div class="llenado" id="barra-vocales"></div></div>
+                <p>Letras: <span id="num-letras">0</span>/26</p>
+                <div class="barra"><div class="llenado" id="barra-letras"></div></div>
+                <p>Palabras: <span id="num-palabras">0</span></p>
+                <div class="barra"><div class="llenado" id="barra-palabras"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let progreso = {
+            vocalesAprendidas: [],
+            letrasAprendidas: [],
+            palabras: 0
+        };
+
+        function hablar(texto) {
+            let voz = new SpeechSynthesisUtterance(texto);
+            voz.lang = 'es-MX';
+            voz.volume = 1;
+            voz.rate = 0.8;
+            voz.pitch = 1.1;
+            speechSynthesis.speak(voz);
+        }
+
+        function modoVoz() {
+            hablar("¡Hola Yaretzi! Estoy aquí para ti. Elige qué aprendemos hoy.");
+        }
+
+        function modoCamara() {
+            ocultarTodo();
+            document.getElementById('seccion-camara').classList.remove('oculto');
+        }
+
+        function verFoto() {
+            let entrada = document.getElementById('camara');
+            if (entrada.files.length > 0) {
+                let vista = document.getElementById('vista-foto');
+                vista.innerHTML = `<p>✅ ¡Tarea recibida! 💛 Papá la ve ahora mismo</p>
+                                   <img src="${URL.createObjectURL(entrada.files[0])}" alt="Tarea de Yaretzi">`;
+                hablar("¡Muy bien, Yaretzi! Tu papá ya ve tu trabajo. ¡Qué orgullo!");
+            }
+        }
+
+        function ocultarTodo() {
+            document.getElementById('seccion-vocales').classList.add('oculto');
+            document.getElementById('seccion-letras').classList.add('oculto');
+            document.getElementById('seccion-lectura').classList.add('oculto');
+            document.getElementById('seccion-camara').classList.add('oculto');
+        }
+
+        function regresarMenu() {
+            ocultarTodo();
+        }
+
+        function mostrarVocales() {
+            ocultarTodo();
+            document.getElementById('seccion-vocales').classList.remove('oculto');
+            hablar("Vamos con las vocales. Toca cada una y escúchala.");
+        }
+
+        function mostrarLetras() {
+            ocultarTodo();
+            document.getElementById('seccion-letras').classList.remove('oculto');
+            let caja = document.getElementById('letras-orden');
+            caja.innerHTML = '';
+            for (let i = 65; i <= 90; i++) {
+                let l = String.fromCharCode(i);
+                let yaAprendida = progreso.letrasAprendidas.includes(l);
+                caja.innerHTML += `<button class="letra-boton letra" style="${yaAprendida?'background:#99ff99;':''}" onclick="enseñarLetra('${l}')">${l}</button>`;
+                if ([78, 90].includes(i)) caja.innerHTML += '<br>';
+            }
+            hablar("Aquí están todas las letras. Vamos descubriéndolas juntas.");
+        }
+
+        function mostrarLectura() {
+            ocultarTodo();
+            document.getElementById('seccion-lectura').classList.remove('oculto');
+            nuevaPalabra();
+        }
+
+        function enseñarVocal(v) {
+            let caja = document.getElementById('libreta-vocales');
+            caja.innerHTML = `Tu libreta ✏️<br><span style="font-size:36px; color:#cc3333; font-weight:bold;">${v} ${v} ${v}</span>`;
+            
+            let resp = document.getElementById('respuesta-vocal');
+            resp.style.display = 'block';
+            resp.innerHTML = `🎉 ¡La ${v}! 🎉<br>Se dice: ${v}... ¡así se hace! 💛`;
+            
+            hablar(`Esta es la ${v}. Repite conmigo: ${v}`);
+            
+            if (!progreso.vocalesAprendidas.includes(v)) {
+                progreso.vocalesAprendidas.push(v);
+                actualizarProgreso();
+            }
+        }
+
+        function enseñarLetra(l) {
+            let caja = document.getElementById('libreta-letras');
+            caja.innerHTML = `Tu libreta ✏️<br><span style="font-size:36px; color:#3366cc; font-weight:bold;">${l} ${l} ${l}</span>`;
+            
+            let resp = document.getElementById('respuesta-letra');
+            resp.style.display = 'block';
+            resp.innerHTML = `🌟 Letra ${l} 🌟<br>¡Muy bien! 💖`;
+            
+            hablar(`Letra ${l}. Vamos a escribirla juntas.`);
+            
+            if (!progreso.letrasAprendidas.includes(l)) {
+                progreso.letrasAprendidas.push(l);
+                actualizarProgreso();
+                mostrarLetras();
+            }
+        }
+
+        let listaPalabras = [
+            {palabra: "MAMA", pista: "La persona que te ama más"},
+            {palabra: "PAPA", pista: "Quién te hizo esta maestra 💛"},
+            {palabra: "SOL", pista: "Brilla en el cielo"},
+            {palabra: "LUNA", pista: "La ves de noche"},
+            {palabra: "CASA", pista: "Donde vivimos"}
+        ];
+        let indicePalabra = 0;
+
+        function nuevaPalabra() {
+            if (indicePalabra >= listaPalabras.length) indicePalabra = 0;
+            let ej = listaPalabras[indicePalabra];
+            document.getElementById('ejercicio-lectura').innerHTML = 
+                `Lee: <span style="color:#ff3399;">${ej.palabra}</span><br><small>${ej.pista}</small>`;
+            document.getElementById('respuesta-escritura').value = '';
+            document.getElementById('resultado-escritura').style.display = 'none';
+            hablar(`Escribe la palabra: ${ej.palabra}`);
+        }
+
+        function verificarEscritura() {
+            let escrita = document.getElementById('respuesta-escritura').value.toUpperCase().trim();
+            let correcta = listaPalabras[indicePalabra].palabra;
+            let res = document.getElementById('resultado-escritura');
+            res.style.display = 'block';
+            
+            if (escrita === correcta) {
+                res.innerHTML = '✅ ¡CORRECTO! ¡Eres brillante, Yaretzi! ✨💛';
+                hablar("¡Exacto! ¡Qué bien escribes!");
+                progreso.palabras++;
+                indicePalabra++;
+            } else {
+                res.innerHTML = '💫 Casi lo tienes... inténtalo otra vez 💛';
+                hablar("Casi, mi niña. Vuelve a intentarlo, tú puedes.");
+            }
+            actualizarProgreso();
+        }
+
+        function actualizarProgreso() {
+            document.getElementById('num-vocales').textContent = progreso.vocalesAprendidas.length;
+            document.getElementById('barra-vocales').style.width = (progreso.vocalesAprendidas.length * 20) + '%';
+            
+            document.getElementById('num-letras').textContent = progreso.letrasAprendidas.length;
+            document.getElementById('barra-letras').style.width = (progreso.letrasAprendidas.length / 26 * 100) + '%';
+            
+            document.getElementById('num-palabras').textContent = progreso.palabras;
+            document.getElementById('barra-palabras').style.width = Math.min(progreso.palabras * 20, 100) + '%';
+        }
+    </script>
+</body>
+</html>
